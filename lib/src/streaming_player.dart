@@ -7,7 +7,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 class StreamingPlayer extends StatefulWidget {
   final String streamUrl;
 
-  const StreamingPlayer({required this.streamUrl, Key? key}) : super(key: key);
+  const StreamingPlayer({required this.streamUrl, super.key});
 
   @override
   State<StreamingPlayer> createState() => _StreamingPlayerState();
@@ -41,7 +41,7 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
     _hideControlsTimer?.cancel();
 
     WakelockPlus.disable();
-    
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -105,20 +105,25 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
 
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = duration.inHours;
     final minutes = twoDigits(duration.inMinutes.remainder(60));
     final seconds = twoDigits(duration.inSeconds.remainder(60));
-    return '$minutes:$seconds';
+
+    return hours > 0 ? '$hours:$minutes:$seconds' : '$minutes:$seconds';
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _isFullScreen ? null : AppBar(title: const Text('Streaming Player')),
+      appBar:
+          _isFullScreen ? null : AppBar(title: const Text('Streaming Player')),
       body: GestureDetector(
         onTap: _isFullScreen ? _toggleControlsVisibility : null,
         child: Center(
           child: _controller.value.isInitialized
-              ? (_isFullScreen ? _buildFullScreenControls() : _buildNormalScreenControls())
+              ? (_isFullScreen
+                  ? _buildFullScreenControls()
+                  : _buildNormalScreenControls())
               : const CircularProgressIndicator(),
         ),
       ),
@@ -164,12 +169,16 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
                 ),
                 IconButton(
                   icon: Icon(
-                    _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                    _controller.value.isPlaying
+                        ? Icons.pause
+                        : Icons.play_arrow,
                     color: Colors.white70,
                   ),
                   onPressed: () {
                     setState(() {
-                      _controller.value.isPlaying ? _controller.pause() : _controller.play();
+                      _controller.value.isPlaying
+                          ? _controller.pause()
+                          : _controller.play();
                     });
                     _resetHideTimer();
                   },
@@ -261,7 +270,9 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
               ),
               onPressed: () {
                 setState(() {
-                  _controller.value.isPlaying ? _controller.pause() : _controller.play();
+                  _controller.value.isPlaying
+                      ? _controller.pause()
+                      : _controller.play();
                 });
               },
             ),
