@@ -73,13 +73,13 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
 
   void _skipForward() {
     final currentPosition = _controller.value.position;
-    final newPosition = currentPosition + const Duration(seconds: 10);
+    final newPosition = currentPosition + const Duration(seconds: 5);
     _controller.seekTo(newPosition);
   }
 
   void _skipBackward() {
     final currentPosition = _controller.value.position;
-    final newPosition = currentPosition - const Duration(seconds: 10);
+    final newPosition = currentPosition - const Duration(seconds: 5);
     _controller.seekTo(newPosition);
   }
 
@@ -162,7 +162,7 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
               children: [
                 IconButton(
                   icon: const Icon(
-                    Icons.replay_10,
+                    Icons.replay_5,
                     color: Colors.white70,
                   ),
                   onPressed: _skipBackward,
@@ -185,7 +185,7 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
                 ),
                 IconButton(
                   icon: const Icon(
-                    Icons.forward_10,
+                    Icons.forward_5,
                     color: Colors.white70,
                   ),
                   onPressed: _skipForward,
@@ -261,7 +261,7 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: const Icon(Icons.replay_10),
+              icon: const Icon(Icons.replay_5),
               onPressed: _skipBackward,
             ),
             IconButton(
@@ -277,7 +277,7 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
               },
             ),
             IconButton(
-              icon: const Icon(Icons.forward_10),
+              icon: const Icon(Icons.forward_5),
               onPressed: _skipForward,
             ),
             IconButton(
