@@ -50,6 +50,14 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
     super.dispose();
   }
 
+  Future<bool> _onWillPop() async {
+    if (_isFullScreen) {
+      _toggleFullScreen();
+      return false; // 阻止直接退出页面
+    }
+    return true; // 允许退出页面
+  }
+
   void _toggleFullScreen() {
     setState(() {
       _isFullScreen = !_isFullScreen;
@@ -114,17 +122,21 @@ class _StreamingPlayerState extends State<StreamingPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:
-          _isFullScreen ? null : AppBar(title: const Text('Streaming Player')),
-      body: GestureDetector(
-        onTap: _isFullScreen ? _toggleControlsVisibility : null,
-        child: Center(
-          child: _controller.value.isInitialized
-              ? (_isFullScreen
-                  ? _buildFullScreenControls()
-                  : _buildNormalScreenControls())
-              : const CircularProgressIndicator(),
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: _isFullScreen
+            ? null
+            : AppBar(title: const Text('Streaming Player')),
+        body: GestureDetector(
+          onTap: _isFullScreen ? _toggleControlsVisibility : null,
+          child: Center(
+            child: _controller.value.isInitialized
+                ? (_isFullScreen
+                    ? _buildFullScreenControls()
+                    : _buildNormalScreenControls())
+                : const CircularProgressIndicator(),
+          ),
         ),
       ),
     );
