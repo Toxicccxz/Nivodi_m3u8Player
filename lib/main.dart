@@ -41,7 +41,7 @@ class _WebViewAppState extends State<WebViewApp> {
     super.initState();
     controller = WebViewController()
       ..loadRequest(
-        Uri.parse('https://www.nivodi.com/'),
+        Uri.parse('https://missav.ws/dm223/en'),
       );
   }
 
